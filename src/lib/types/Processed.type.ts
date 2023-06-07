@@ -14,11 +14,13 @@ interface SuccessMessage<T> {
 
 interface InvalidMessage<Schema> {
   ok: false;
-  invalids: Schema;
+  reason: "invalid"
+  invalids: Partial<Schema>;
 }
 
 interface ClientErrorMessage {
   ok: false;
+  reason: "client-error"
   message: string;
 }
 
