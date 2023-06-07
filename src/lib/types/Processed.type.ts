@@ -17,7 +17,7 @@ interface SuccessMessage<T> {
 interface InvalidMessage<Schema extends z.ZodTypeAny> {
   ok: false;
   reason: "invalid"
-  invalids: Record<keyof z.infer<Schema>, string>;
+  invalids: Partial<Record<keyof z.infer<Schema>, string>>;
 }
 
 interface ClientErrorMessage {
