@@ -1,7 +1,7 @@
 import type { Processed } from "$lib/types/Processed.type";
-import type { ZodError } from "zod";
+import type { ZodError, ZodTypeAny } from "zod";
 
-export default function generate_invalid_error_msg<Schema>(
+export default function generate_invalid_error_msg<Schema extends ZodTypeAny>(
   e: ZodError
 ): Processed<never, Schema> {
     

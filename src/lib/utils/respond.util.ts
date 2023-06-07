@@ -14,9 +14,9 @@ import generate_invalid_error_msg from "$lib/gens/invalid-error-msg.gen";
 import type { Processed } from "$lib/types/Processed.type";
 import type { Result } from "$lib/types/Result.types";
 import { error } from "@sveltejs/kit";
-import { ZodError } from "zod";
+import { ZodError, type ZodTypeAny } from "zod";
 
-export default function respond<T, Schema>(result: Result<T, Schema>): Processed<T, Schema>{
+export default function respond<T, Schema extends ZodTypeAny>(result: Result<T, unknown>): Processed<T, Schema>{
     if(result.result === "success"){
         return {
             ok: true,
