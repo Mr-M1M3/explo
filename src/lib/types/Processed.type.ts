@@ -14,11 +14,10 @@ interface SuccessMessage<T> {
   data: T;
 }
 
-type FieldErrors<Schema extends z.ZodTypeAny> = ReturnType<z.SafeParseError<z.infer<Schema>>['error']['flatten']>['fieldErrors'];
 interface InvalidMessage<Schema extends z.ZodTypeAny> {
   ok: false;
   reason: "invalid"
-  invalids: Record<keyof FieldErrors<Schema>, string>;
+  invalids: Record<keyof z.infer<Schema>, string>;
 }
 
 interface ClientErrorMessage {
