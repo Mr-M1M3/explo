@@ -7,15 +7,18 @@
        * Generic Schema is the shape of the data that was being processed. If user sends invalid data, it can be used to show the user which fields were invalid.
 */
 
+import type { z } from "zod";
+
 interface SuccessMessage<T> {
   ok: true;
   data: T;
 }
 
-interface InvalidMessage<Schema> {
+type FieldErrors<Schema extends z.ZodTypeAny> = ReturnType<z.SafeParseError<z.infer<Schema>>['error']['flatten']>['fieldErrors'];
+interface InvalidMessage<Schema extends z.ZodTypeAny> {
   ok: false;
   reason: "invalid"
-  invalids: Partial<Record<keyof Schema, string>>;
+  invalids: Record<keyof FieldErrors<Schema>, string>;
 }
 
 interface ClientErrorMessage {
@@ -24,7 +27,7 @@ interface ClientErrorMessage {
   message: string;
 }
 
-export type Processed<T, Schema> =
+export type Processed<T, Schema extends z.ZodTypeAny> =
   | SuccessMessage<T>
   | InvalidMessage<Schema>
   | ClientErrorMessage;
