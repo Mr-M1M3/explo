@@ -15,7 +15,7 @@ interface SuccessMessage<T> {
 interface InvalidMessage<Schema> {
   ok: false;
   reason: "invalid"
-  invalids: Partial<Schema>;
+  invalids: Partial<Record<keyof Schema, string>>;
 }
 
 interface ClientErrorMessage {
