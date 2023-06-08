@@ -14,6 +14,7 @@ import generate_invalid_error_msg from "$lib/gens/invalid-error-msg.gen";
 import type { Processed } from "$lib/types/Processed.type";
 import type { Result } from "$lib/types/Result.types";
 import { error } from "@sveltejs/kit";
+import { ClientResponseError } from "pocketbase";
 import { ZodError, type ZodTypeAny } from "zod";
 
 export default function respond<T, Schema extends ZodTypeAny>(result: Result<T, unknown>): Processed<T, Schema>{
@@ -25,6 +26,13 @@ export default function respond<T, Schema extends ZodTypeAny>(result: Result<T, 
     }
     if(result.error instanceof ZodError){
         return generate_invalid_error_msg<Schema>(result.error);
+    }
+    if(result.error instanceof ClientResponseError){
+        return {
+            ok: false,
+            reason: "client-error",
+            message: result.error.message
+        }
     }
 
     throw error(500, "Something went wrong on the server");
