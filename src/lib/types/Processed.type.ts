@@ -9,18 +9,18 @@
 
 import type { z } from "zod";
 
-type SuccessMessage<T> {
+type SuccessMessage<T> = {
   ok: true;
   data: T;
 }
 
-type InvalidMessage<Schema extends z.ZodTypeAny> {
+type InvalidMessage<Schema extends z.ZodTypeAny> = {
   ok: false;
   reason: "invalid"
   invalids: Partial<Record<keyof z.infer<Schema>, string>>;
 }
 
-type ClientErrorMessage {
+type ClientErrorMessage  = {
   ok: false;
   reason: "client-error"
   message: string;
