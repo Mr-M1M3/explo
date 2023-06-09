@@ -16,6 +16,7 @@ import type { Result } from "$lib/types/Result.types";
 import { error } from "@sveltejs/kit";
 import { ClientResponseError } from "pocketbase";
 import { ZodError, type ZodTypeAny } from "zod";
+import generate_pb_error_msg from "$lib/server/gens/pb-error-msg.gen";
 
 export default function respond<T, Schema extends ZodTypeAny>(result: Result<T, unknown>): Processed<T, Schema>{
     if(result.result === "success"){
@@ -28,11 +29,7 @@ export default function respond<T, Schema extends ZodTypeAny>(result: Result<T, 
         return generate_invalid_error_msg<Schema>(result.error);
     }
     if(result.error instanceof ClientResponseError){
-        return {
-            ok: false,
-            reason: "client-error",
-            message: result.error.message
-        }
+        return generate_pb_error_msg(result.error);
     }
 
     throw error(500, "Something went wrong on the server");
