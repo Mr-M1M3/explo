@@ -14,8 +14,8 @@
 import type { Result } from "$lib/types/Result.types";
 import type { z } from "zod";
 
-export default function validate<Schema extends z.ZodTypeAny>(operand: unknown, schema: Schema ): Result<z.infer<Schema>, z.ZodError> {
-  const parsed = schema.safeParse(operand);
+export default async function validate<Schema extends z.ZodTypeAny>(operand: unknown, schema: Schema ): Promise<Result<z.infer<Schema>, z.ZodError>> {
+  const parsed = await schema.safeParseAsync(operand);
   if (parsed.success === true) {
     return {
       result: "success",
