@@ -23,7 +23,8 @@ export const actions = {
         if(student.result === "error"){
             return respond(student);
         }
-
+        // ATTENTION: data returned from this action can vary to ts due to returning Processed<T, S> where T is different (never) everytime.
+        // So, ide cannot show code suggestion properly
         return respond<Student, typeof LoginCredentialSchema>(student);
     }
 }

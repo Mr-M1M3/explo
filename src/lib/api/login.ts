@@ -7,7 +7,7 @@ export default async function login<Data>(credentials: {email: string, password:
         const authorized =  await pb.collection('students').authWithPassword<Data>(credentials.email, credentials.password);
         return {
             result: "success",
-            original: authorized.record
+            original: structuredClone(authorized.record)
         }
     }catch(e){
         return {
