@@ -10,7 +10,7 @@
        * As the return value of this function would be returned to the user, it returns data of type Processed<T, Scheme>;
 */
 
-import generate_invalid_error_msg from "$lib/gens/invalid-error-msg.gen";
+import generate_invalid_error_msg from "$lib/server/gens/invalid-error-msg.gen";
 import type { Processed } from "$lib/types/Processed.type";
 import type { Result } from "$lib/types/Result.types";
 import { error } from "@sveltejs/kit";
