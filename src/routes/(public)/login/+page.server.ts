@@ -4,11 +4,11 @@ import type { Student } from '$lib/types/Student.type.js';
 import read from '$lib/server/utils/read.util.js'
 import respond from '$lib/server/utils/respond.util.js';
 import validate from '$lib/server/utils/validator.util.js';
-import { error, fail } from '@sveltejs/kit';
+import { error, fail, redirect } from '@sveltejs/kit';
 import type { z } from 'zod';
 
 export const actions = {
-    default: async ({request}) => {
+    default: async ({request, cookies}) => {
 
         const credentials = await read(request);
         if(credentials.result === "error"){
@@ -23,8 +23,10 @@ export const actions = {
         if(student.result === "error"){
             return respond(student);
         }
-        // ATTENTION: data returned from this action can vary to ts due to returning Processed<T, S> where T is different (never) everytime.
-        // So, ide cannot show code suggestion properly
-        return respond<Student, typeof LoginCredentialSchema>(student);
+        cookies.set('pb_auth', student.original.session.substring('pb_auth'.length + 1), {
+            path: '/',
+            encode: (v) => v
+        });
+        throw redirect(303, '/');
     }
 }
