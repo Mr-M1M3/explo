@@ -1,9 +1,9 @@
-import login from '$lib/api/login';
-import LoginCredentialSchema from '$lib/schemas/login-credential.schema.js';
+import login from '$lib/server/api/login';
+import LoginCredentialSchema from '$lib/server/schemas/login-credential.schema.js';
 import type { Student } from '$lib/types/Student.type.js';
-import read from '$lib/utils/read.util.js'
-import respond from '$lib/utils/respond.util.js';
-import validate from '$lib/utils/validator.util.js';
+import read from '$lib/server/utils/read.util.js'
+import respond from '$lib/server/utils/respond.util.js';
+import validate from '$lib/server/utils/validator.util.js';
 import { error, fail } from '@sveltejs/kit';
 import type { z } from 'zod';
 
