@@ -14,7 +14,7 @@ export const actions = {
         if(credentials.result === "error"){
             throw error(500, "something went wrong on the server");
         }
-        const validated_credentials = validate<typeof LoginCredentialSchema>(credentials.original, LoginCredentialSchema);
+        const validated_credentials = await validate<typeof LoginCredentialSchema>(credentials.original, LoginCredentialSchema);
         if(validated_credentials.result === "error"){
             return fail(400, respond<z.infer<typeof LoginCredentialSchema>, typeof LoginCredentialSchema>(validated_credentials));
         }
