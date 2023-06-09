@@ -3,6 +3,7 @@
 
   // TODO: Improve type-safety
   export let form;
+  
 </script>
 {#if form?.message}
   <p>{form?.message}</p>
