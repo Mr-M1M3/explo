@@ -8,7 +8,7 @@ import { error, fail, redirect } from '@sveltejs/kit';
 import type { z } from 'zod';
 
 export const actions = {
-    default: async ({request, cookies}) => {
+    default: async ({request, cookies, url}) => {
 
         const credentials = await read(request);
         if(credentials.result === "error"){
@@ -27,6 +27,7 @@ export const actions = {
             path: '/',
             encode: (v) => v
         });
-        throw redirect(303, '/');
+        
+        throw redirect(303, `/${Buffer.from(url.searchParams.get('from') || '', 'base64url').toString('utf-8')}`);
     }
 }
