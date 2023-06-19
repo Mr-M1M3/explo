@@ -21,7 +21,7 @@ export const actions = {
         
         const student = await login<Student>(validated_credentials.original);
         if(student.result === "error"){
-            return respond(student);
+            return fail(400, respond(student));
         }
         cookies.set('pb_auth', student.original.session.substring('pb_auth'.length + 1), {
             path: '/',

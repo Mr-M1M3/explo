@@ -3,6 +3,9 @@
   import "@skeletonlabs/skeleton/styles/skeleton.css";
   import "../app.postcss";
   import Nav from "$lib/client/components/Nav.svelte";
+
+
+  import { Toast } from "@skeletonlabs/skeleton";
 </script>
 
 <svelte:head>
@@ -16,3 +19,4 @@
   <Nav />
   <slot />
 </main>
+<Toast/>
