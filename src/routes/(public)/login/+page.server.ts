@@ -8,7 +8,7 @@ import { error, fail, redirect } from '@sveltejs/kit';
 import type { z } from 'zod';
 
 export const actions = {
-    default: async ({request, cookies}) => {
+    default: async ({request, cookies, url}) => {
 
         const credentials = await read(request);
         if(credentials.result === "error"){
@@ -21,12 +21,13 @@ export const actions = {
         
         const student = await login<Student>(validated_credentials.original);
         if(student.result === "error"){
-            return respond(student);
+            return fail(400, respond(student));
         }
         cookies.set('pb_auth', student.original.session.substring('pb_auth'.length + 1), {
             path: '/',
             encode: (v) => v
         });
-        throw redirect(303, '/');
+        
+        throw redirect(303, `/${Buffer.from(url.searchParams.get('from') || '', 'base64url').toString('utf-8')}`);
     }
 }
