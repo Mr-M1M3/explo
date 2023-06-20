@@ -6,11 +6,7 @@ export default function generate_pb_error_msg(err: ClientResponseError): Process
     // if pocketbase server is not up
     if(err.originalError?.cause?.code === "ECONNREFUSED"){
         console.error('ECONNREFUSED: Pocketbase instance may not be running');
-        return {
-            ok: false,
-            reason: "client-error",
-            message: "Something went wrong on the server"
-        }
+        throw error(500, "Something went wrong on the sever");
     }
 
     if((err.status >= 400) && (err.status < 500)){

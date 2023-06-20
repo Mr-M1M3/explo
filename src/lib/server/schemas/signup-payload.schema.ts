@@ -46,7 +46,7 @@ const SignupPayloadSchema = z
     (schema) => {
       return schema.password === schema.passwordConfirm;
     },
-    { message: `passwords don't match`, path: ["password", "passwordConfirm"] }
+    { message: `passwords don't match`, path: ["passwordConfirm", "password"] }
   ).refine(async schema => {
     const existing_user = await select_first('students', `email="${schema.email}"`);
     if(existing_user.result === "error"){
@@ -55,7 +55,7 @@ const SignupPayloadSchema = z
       return false;
     }
   }, {
-    message: 'an account with that email already exists',
+    message: 'an account with this email already exists',
     path: ['email']
   });
 

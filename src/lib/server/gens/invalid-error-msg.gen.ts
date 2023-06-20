@@ -8,7 +8,7 @@ export default function generate_invalid_error_msg<Schema extends z.ZodTypeAny>(
   const flatten = e.flatten();
 
   // there should not be any form errors
-  if (flatten.formErrors) {
+  if (flatten.formErrors.length > 0) {
     console.error(`Found form errors, reporting.`, flatten);
   }
 
