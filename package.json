@@ -29,6 +29,6 @@
   "type": "module",
   "dependencies": {
     "pocketbase": "^0.15.1",
-    "zod": "^3.21.4"
+    "zod": "^3.22.3"
   }
 }
